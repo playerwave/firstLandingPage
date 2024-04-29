@@ -3,11 +3,12 @@ import { MdOutlineSearch } from "react-icons/md";
 import {
   WiDayCloudy,
   WiRainMix,
-  WiWindy,
+  WiStrongWind,
   WiCloudy,
   WiDaySunny,
   WiRain,
   WiSnowflakeCold,
+  WiRaindrop,
 } from "react-icons/wi";
 import { useState } from "react";
 
@@ -15,6 +16,21 @@ function WeatherApp() {
   let api_key = "e611bf0e66e7326f482ea23412b7aac3";
 
   const [wicon, setWicon] = useState(<WiDayCloudy />);
+
+  const trailer = document.getElementById("trailer");
+  window.onmousemove = (e) => {
+    const x = e.clientX - trailer.offsetWidth / 2,
+      y = e.clientY - trailer.offsetHeight / 2;
+
+    const keyframes = {
+      transform: `translate(${x}px, ${y}px)`,
+    };
+
+    trailer.animate(keyframes, {
+      duration: 800,
+      fill: "forwards",
+    });
+  };
 
   const search = async () => {
     const element = document.getElementsByClassName("cityInput");
@@ -75,36 +91,53 @@ function WeatherApp() {
   };
 
   return (
-    <div className="container">
-      <div className="top-bar">
-        <input type="text" className="cityInput" placeholder="Search" />
-        <div
-          className="search-icon"
-          onClick={() => {
-            search();
-          }}
-        >
-          <MdOutlineSearch />
-        </div>
+    <>
+      <div id="trailer">
+        <i id="trailer-icon"></i>
       </div>
-      <div className="weather-icon">{wicon}</div>
-      <div className="weather-temp">24°c</div>
-      <div className="weather-location">Chonburi</div>
-      <div className="data-container">
-        <div className="element">
-          <div className="data">
-            <div className="humanity-percent">64%</div>
-            <div className="text">Humidity</div>
+      <div id="blur">
+        <div className="website-name">
+          <h1>
+            Welcome to my Weather Website <WiDayCloudy />
+          </h1>
+        </div>
+        <div className="container">
+          <div className="top-bar">
+            <input type="text" className="cityInput" placeholder="Search" />
+            <div
+              className="search-icon"
+              onClick={() => {
+                search();
+              }}
+            >
+              <MdOutlineSearch />
+            </div>
+          </div>
+          <div className="weather-icon">{wicon}</div>
+          <div className="weather-temp">24°c</div>
+          <div className="weather-location">Chonburi</div>
+          <div className="data-container">
+            <div className="element">
+              <div className="data">
+                <WiRaindrop className="icon" />
+                <div className="humanity-percent">64%</div>
+                <div className="text">Humidity</div>
+              </div>
+            </div>
+            <div className="element">
+              <div className="data">
+                <WiStrongWind className="icon" />
+                <div className="wind-rate">18 km/h</div>
+                <div className="text">Wind Speed</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="element">
-          <div className="data">
-            <div className="wind-rate">18 km/h</div>
-            <div className="text">Wind Speed</div>
-          </div>
+        <div className="Description">
+          <p>My First Landing Page Created By Thanaphat ketsani</p>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
